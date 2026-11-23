@@ -71,14 +71,16 @@ h2 {
 }
 
 /* 圖片滿版、依原始比例自然撐高 —— 這是瀑布流高低錯落的來源 */
-.waterfall-item img {
+.waterfall-item img,
+.waterfall-item video {
     display: block;
     width: 100%;
     height: auto;
     transition: transform 0.4s ease;
 }
 
-.waterfall-item:hover img {
+.waterfall-item:hover img,
+.waterfall-item:hover video {
     transform: scale(1.03);
 }
 
@@ -119,11 +121,13 @@ h2 {
 /* 使用者偏好減少動態時，關閉 hover 動畫 */
 @media (prefers-reduced-motion: reduce) {
     .waterfall-item,
-    .waterfall-item img {
+    .waterfall-item img,
+    .waterfall-item video {
         transition: none;
     }
     .waterfall-item:hover,
-    .waterfall-item:hover img {
+    .waterfall-item:hover img,
+    .waterfall-item:hover video {
         transform: none;
     }
 }

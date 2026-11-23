@@ -52,11 +52,17 @@ function initWaterfall() {
             });
         };
 
-        // 圖片載入前高度未知，載入完成後重新排版
+        // 圖片 / 影片載入前高度未知，載入完成後重新排版
         container.querySelectorAll('img').forEach(img => {
             if (!img.complete) {
                 img.addEventListener('load', layout);
                 img.addEventListener('error', layout);
+            }
+        });
+        container.querySelectorAll('video').forEach(video => {
+            if (video.readyState < 1) {
+                video.addEventListener('loadedmetadata', layout);
+                video.addEventListener('error', layout);
             }
         });
 
