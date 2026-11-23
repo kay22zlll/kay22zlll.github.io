@@ -36,12 +36,32 @@ background-color: rgb(25, 25, 112);
 /* ===================================================
 3. 履歷內容區塊背景與邊界優化
 =================================================== */
-/* 選取所有 .resume-section 履歷區塊 */
-.resume-section {
-/* 設定柔和的淡乳⽩⾊或淡⿈⾊背景 (RGB: 255, 248, 220) */
-background-color: rgb(255, 248, 220);
 /* (可選) 加⼊牆⾯/紙張紋理背景圖 (圖⽚路徑相對於 mystyles.
 css 檔案) */
 /* background-image: url('../assets/img/white-wall-3-2.
 png'); */
+
+
+/* ===================================================
+5. Waterfall 瀑布流⾵格作品集樣式
+=================================================== */
+.waterfall-container {
+column-count: 3; /* 電腦螢幕預設切分為 3 欄瀑布流 */
+column-gap: 20px;
+}
+.waterfall-item {
+break-inside: avoid; /* 核⼼技巧：防⽌卡⽚被欄位裁切跨欄
+*/
+margin-bottom: 20px;
+background-color: #ffffff;
+border: 1px solid #e9ecef;
+border-radius: 12px;
+padding: 16px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+/* ⼿機版還原為單欄顯⽰ */
+@media (max-width: 768px) {
+.waterfall-container {
+column-count: 1;
+}
 }
