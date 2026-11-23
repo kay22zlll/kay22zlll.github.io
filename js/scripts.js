@@ -31,4 +31,53 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
+    // Waterfall (masonry) layout for the portfolio grid
+    initWaterfall();
+
 });
+
+function initWaterfall() {
+    const containers = document.querySelectorAll('.waterfall-container');
+
+    containers.forEach(container => {
+        const items = container.querySelectorAll('.waterfall-item');
+
+        const layout = () => {
+            container.classList.add('is-masonry');
+            const gap = parseFloat(getComputedStyle(container).getPropertyValue('--waterfall-gap')) || 0;
+            items.forEach(item => {
+                // 每張卡片跨越的列數 = 卡片高度 + 底部間距（列高為 1px）
+                const height = item.getBoundingClientRect().height;
+                item.style.gridRowEnd = 'span ' + Math.ceil(height + gap);
+            });
+        };
+
+        // 圖片載入前高度未知，載入完成後重新排版
+        container.querySelectorAll('img').forEach(img => {
+            if (!img.complete) {
+                img.addEventListener('load', layout);
+                img.addEventListener('error', layout);
+            }
+        });
+
+        // 欄寬改變（視窗縮放、側邊欄切換）時重新計算
+        if ('ResizeObserver' in window) {
+            let lastWidth = 0;
+            new ResizeObserver(entries => {
+                const width = entries[0].contentRect.width;
+                if (width !== lastWidth) {
+                    lastWidth = width;
+                    layout();
+                }
+            }).observe(container);
+        } else {
+            window.addEventListener('resize', layout);
+        }
+
+        layout();
+        // 網路字型載入後文字高度可能改變
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(layout);
+        }
+    });
+}
